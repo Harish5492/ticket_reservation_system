@@ -44,8 +44,17 @@ export default class UsersService {
       TIME.TOKEN.TOKEN_EXPIRES,
     );
     const encodedToken = encodeURIComponent(token);
+    await this.updateUser(
+      {
+        email: emailExists.email,
+      },
+      {
+        forgotPasswordToken: token,
+        isTokenUsed: false,
+      },
+    );
     const link = `${EM.BASE_URL}/${emailExists.id}?token=${encodedToken}`;
-    console.log(link)
+    console.log(link);
     // await EmailService.sendMail(data.email, link);
 
     return { message: MESSAGES.API_INFO.FORGOT_PASSWORD_LINK };
@@ -63,11 +72,12 @@ export default class UsersService {
     const decryptedToken = await Utilities.decryptCipherWithTime(decodedToken);
     if (userExists.email !== decryptedToken)
       throwError(MESSAGES.ERROR.INVALID_TOKEN);
+    if (userExists.isTokenUsed === true) throwError(MESSAGES.ERROR.TOKEN_USED);
     if (data.password !== data.confirmPassword)
       throwError(MESSAGES.ERROR.PASSWORD_MISSMATCHED);
     data.password = await Utilities.hashPassword(data.password);
     await this.userRepository.update(
-      { password: data.password },
+      { password: data.password, isTokenUsed: true },
       {
         where: { id },
       },

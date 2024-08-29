@@ -41,7 +41,6 @@ export class UserController {
   @Post('emailExists')
   async emailExists(@Body() body: usersDto.IEmailExistsDto): Promise<any> {
     try {
-      console.log('yoooo');
       const result = await this.userservice.emailExists(body);
       return successResponse(MESSAGES.USER.EMAIL_EXISTS, result);
     } catch (error) {

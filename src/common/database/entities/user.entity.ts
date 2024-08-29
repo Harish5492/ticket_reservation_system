@@ -38,27 +38,7 @@ export class User extends Model<User> {
     defaultValue: false,
     allowNull: true,
   })
-  tokenExpiresAt: boolean;
-
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  otp: number;
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-    allowNull: true,
-  })
-  otpVerified: boolean;
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: false,
-    allowNull: true,
-  })
-  otpExipresAt: boolean;
+  isTokenUsed: boolean;
 
   @Column({
     type: DataType.TEXT,
