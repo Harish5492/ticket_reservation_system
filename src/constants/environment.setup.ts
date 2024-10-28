@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 
-dotenv.config({ path: 'src/.env' });
-
+dotenv.config({ path: '.env' });
 export const ENVIROMENT_MANAGER = {
   SERVICE_NAME: process.env.SERVICE_NAME,
   SERVICE_HOST: process.env.SERVICE_HOST,
@@ -21,6 +20,10 @@ export const ENVIROMENT_MANAGER = {
     DB_PASS: process.env.DB_PASS,
     DB_DIALECT: process.env.DB_DIALECT,
     DB_NAME: process.env.DB_NAME,
+  },
+  TWILIO: {
+    ACCOUNTSID: process.env.ACCOUNTSID,
+    AUTHTOKEN: process.env.AUTHTOKEN,
   },
   MAILTRAP: {
     USERNAME: process.env.MAILTRAP_USERNAME,

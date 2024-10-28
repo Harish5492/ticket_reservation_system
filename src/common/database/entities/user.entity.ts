@@ -13,32 +13,38 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: false,
   })
-  email: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  fullName: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  password: string;
+  mobileNumber: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  forgotPasswordToken: string;
+  otp: string;
 
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
     allowNull: true,
   })
-  isTokenUsed: boolean;
+  isOtpUsed: boolean;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  expirationDate: Date;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  fullName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  address: string;
 
   @Column({
     type: DataType.TEXT,

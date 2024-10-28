@@ -1,10 +1,10 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { User } from '../../common/database/entities';
 import { throwError } from '../../helpers/responseHandeler';
-import * as Utilities from '../../helpers/utilies.helper';
-import EmailService from '../../helpers/smtp.helper';
+import * as Utilities from '../../helpers/utilies.service';
+import TwilioService from '../../helpers/twilio.service';
 import * as UserDto from './user.dto';
-import { USER_REPOSITORY, MESSAGES, TIME, EM } from 'src/constants';
+import { USER_REPOSITORY, MESSAGES, TIME } from 'src/constants';
 import { TokensService } from '../tokens/token.service';
 
 @Injectable()
@@ -13,100 +13,77 @@ export default class UsersService {
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
     private readonly tokenService: TokensService,
   ) {}
+  async userMobileNumber(data: UserDto.IUserMobileNumberDto): Promise<object> {
+    const { mobileNumber } = data;
+    const expirationDate = new Date(Date.now() + TIME.OTP.OTP_EXPIRES);
+    // const otp = await Utilities.generateOtp();
+    // const isUserExists = await this.isMobileNumberExists(mobileNumber);
+    const [otp, isUserExists] = await Promise.all([
+      Utilities.generateOtp(),
+      this.isMobileNumberExists(mobileNumber),
+    ]);
+    // await TwilioService.sendMessage({
+    //   otp: otp,
+    //   to: '',
+    // });
+    // if (isUserExists) {
+    //   await this.updateUser({ mobileNumber }, { otp });
+    // } else {
+    //   await this.userRepository.create<User>({
+    //     mobileNumber,
+    //     otp,
+    //     expirationDate,
+    //   });
+    // }
+    const userOperation = isUserExists
+      ? this.updateUser({ mobileNumber }, { otp, expirationDate })
+      : this.userRepository.create<User>({ mobileNumber, otp, expirationDate });
 
-  async register(data: UserDto.IUserRegisterDto): Promise<{ message: string }> {
-    const emailExits = await this.isEmailExits(data.email);
-    if (emailExits) throwError(MESSAGES.ERROR.EMAIL_EXISTS);
-    data.password = await Utilities.hashPassword(data.password);
-    await this.userRepository.create<User>({ ...data });
-    return { message: MESSAGES.API_INFO.REGISTRATION_SUCCESSFUL };
+    await userOperation;
+    return { mobileNumber };
   }
 
-  async emailExists(
-    data: UserDto.IEmailExistsDto,
+  async registerLogin(
+    data: UserDto.IUserLoginRegistrationDto,
   ): Promise<{ message: string }> {
-    const emailExists = await this.userRepository.findOne({
-      where: { email: data.email },
-    });
-    if (emailExists) {
-      return { message: MESSAGES.API_INFO.EMAIL_ALREADY_EXISTS };
-    }
-    return { message: MESSAGES.API_INFO.EMAIL_AVAILABLE };
-  }
-
-  async forgotPassword(
-    data: UserDto.IEmailExistsDto,
-  ): Promise<{ message: string }> {
-    const emailExists = await this.isEmailExits(data.email);
-    if (!emailExists) throwError(MESSAGES.ERROR.EMAIL_NOT_EXISTS);
-    const token = await Utilities.encryptCipherWithTime(
-      data.email,
-      TIME.TOKEN.TOKEN_EXPIRES,
-    );
-    const encodedToken = encodeURIComponent(token);
-    await this.updateUser(
-      {
-        email: emailExists.email,
-      },
-      {
-        forgotPasswordToken: token,
-        isTokenUsed: false,
-      },
-    );
-    const link = `${EM.BASE_URL}/${emailExists.id}?token=${encodedToken}`;
-    console.log(link);
-    // await EmailService.sendMail(data.email, link);
-
-    return { message: MESSAGES.API_INFO.FORGOT_PASSWORD_LINK };
-  }
-  async resetPassword(
-    data: UserDto.IResetPasswordDto,
-    params: UserDto.IForgotPasswordParams,
-    query: UserDto.IForgotPasswordQuery,
-  ): Promise<{ message: string }> {
-    const { id } = params;
-    const { token } = query;
-    const decodedToken = decodeURIComponent(token);
-    const userExists = await this.getUser({ id });
-    if (!userExists) throwError(MESSAGES.ERROR.USER_NOT_EXIST);
-    const decryptedToken = await Utilities.decryptCipherWithTime(decodedToken);
-    if (userExists.email !== decryptedToken)
-      throwError(MESSAGES.ERROR.INVALID_TOKEN);
-    if (userExists.isTokenUsed === true) throwError(MESSAGES.ERROR.TOKEN_USED);
-    if (data.password !== data.confirmPassword)
-      throwError(MESSAGES.ERROR.PASSWORD_MISSMATCHED);
-    data.password = await Utilities.hashPassword(data.password);
-    await this.userRepository.update(
-      { password: data.password, isTokenUsed: true },
-      {
-        where: { id },
-      },
-    );
-    return { message: MESSAGES.API_INFO.RESET_PASSWORD };
-  }
-  async login(data: UserDto.ILoginDto): Promise<object> {
-    const { password } = data;
-    const User = await this.isEmailExits(data.email);
-    if (!User) throwError(MESSAGES.ERROR.USER_NOT_EXIST);
-    if (!(await Utilities.comparePassword(password, User.password))) {
-      throwError(MESSAGES.ERROR.INCORRECT_PASSWORD);
-    }
+    const { mobileNumber, otp } = data;
+    await this.otpError(mobileNumber, otp);
     const tokens = await this.getJwtTokens(
-      { userId: User.id, email: User.email },
+      { mobileNumber: mobileNumber },
       true,
       TIME.JWT.THIRTY_DAYS,
     );
-
     await this.updateUser(
-      { email: User.email },
-      { refreshToken: tokens.refreshToken },
+      { mobileNumber },
+      { isOtpUsed: true, refreshToken: tokens.refreshToken },
     );
-    return tokens;
+
+    return { message: MESSAGES.API_INFO.REGISTRATION_LOGIN_SUCCESSFUL };
   }
 
-  async isEmailExits(email: string) {
+  async otpError(mobileNumber: string, otp: string) {
+    const user = await this.getUser({ mobileNumber });
+    if (user.otp !== otp) throwError(MESSAGES.ERROR.INVALID_OTP);
+    if (new Date() > user.expirationDate)
+      throwError(MESSAGES.ERROR.OTP_EXPIRES);
+    if (user.isOtpUsed === true) throwError(MESSAGES.ERROR.OTP_USED);
+  }
+
+  async mobileExists(
+    data: UserDto.IUserMobileNumberDto,
+  ): Promise<{ message: string }> {
+    const emailExists = await this.userRepository.findOne({
+      where: { mobileNumber: data.mobileNumber },
+    });
+    if (emailExists) {
+      return { message: MESSAGES.API_INFO.MOBILE_NUMBER_EXISTS };
+    }
+    return { message: MESSAGES.API_INFO.MOBILE_NUMBER_AVAILABLE };
+  }
+
+  async isMobileNumberExists(mobileNumber: string) {
     return await this.userRepository.findOne({
-      where: { email },
+      where: { mobileNumber },
     });
   }
 

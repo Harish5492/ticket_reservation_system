@@ -1,21 +1,7 @@
-import * as bcrypt from 'bcrypt';
 import * as CryptoJS from 'crypto-js';
 import { EM, MESSAGES } from '../constants';
 import { throwError } from './responseHandeler';
 
-const saltRounds = 10;
-
-export async function hashPassword(password: string): Promise<string> {
-  const hashed = await bcrypt.hash(password, saltRounds);
-  return hashed;
-}
-export async function comparePassword(
-  password: string,
-  hashedPassword: string,
-): Promise<boolean> {
-  const isMatch = await bcrypt.compare(password, hashedPassword);
-  return isMatch;
-}
 export const encryptCipher = async (data: any) => {
   const encryptionKey: any = EM.ENCDECRYPT_KEY;
   return CryptoJS.AES.encrypt(JSON.stringify(data), encryptionKey).toString();
@@ -62,4 +48,8 @@ export const decryptCipherWithTime = (data: string) => {
   }
 
   return parsedToken.data;
+};
+
+export const generateOtp = async (): Promise<string> => {
+  return Math.floor(1000 + Math.random() * 9000).toString();
 };

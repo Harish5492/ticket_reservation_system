@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import * as utilities from '../../helpers/utilies.helper';
+import * as utilities from '../../helpers/utilies.service';
 import UsersService from '../user/user.service';
 import { MESSAGES, TIME } from '../../constants';
 
@@ -30,7 +30,7 @@ export class TokensService {
       throw new UnauthorizedException(MESSAGES.ERROR.ACCESS_DENIED);
 
     const tokens = await this.getTokens(
-      { userId: user.id, emailId: user.email },
+      { userId: user.id, emailId: user.mobileNumber },
       TIME.JWT.FIVE_DAYS,
     );
 

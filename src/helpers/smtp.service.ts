@@ -24,11 +24,11 @@ class EmailService {
 
   public async sendMail(to: string, link: string) {
     const mailOptions = {
-      from: 'noreply@yourdomain.com', // Set a valid sender address
-      to: to, // Recipient's email
-      subject: 'Reset Your Password', // Subject line
-      text: `Click on the following link to reset your password: ${link}`, // Plain text body
-      html: `<p>Click on the following link to reset your password: <a href="${link}">${link}</a></p>`, // HTML body
+      from: 'noreply@yourdomain.com',
+      to: to,
+      subject: 'Reset Your Password',
+      text: `Click on the following link to reset your password: ${link}`,
+      html: `<p>Click on the following link to reset your password: <a href="${link}">${link}</a></p>`,
     };
 
     try {
