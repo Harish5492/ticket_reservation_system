@@ -3,19 +3,25 @@ import { AppModule } from './app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cors from 'cors';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn'],
   });
+  /** initialize confgi service to get excess all the env's local */
+  const config = app.get<ConfigService>(ConfigService);
   initMiddlewares(app);
-  initSwaggerDocs(app); // Initialize Swagger before listening to ensure it's set up
-  await app.listen(3300);
-  console.log('Server is running on http://localhost:3300');
+  initSwaggerDocs(app);
+  /** set host and port of server to run it. */
+  const host: string = config.get('SERVICE_HOST');
+  const port: number | string = config.get('SERVICE_PORT');
+  await app.listen(port);
+  console.log(`Server is running on http://localhost:${port}`);
 }
 async function initMiddlewares(app: INestApplication) {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  // app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api/v1');
   app.enableCors({ origin: '*' });
   app.use(cors());
 }

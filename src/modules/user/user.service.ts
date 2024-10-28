@@ -16,25 +16,14 @@ export default class UsersService {
   async userMobileNumber(data: UserDto.IUserMobileNumberDto): Promise<object> {
     const { mobileNumber } = data;
     const expirationDate = new Date(Date.now() + TIME.OTP.OTP_EXPIRES);
-    // const otp = await Utilities.generateOtp();
-    // const isUserExists = await this.isMobileNumberExists(mobileNumber);
     const [otp, isUserExists] = await Promise.all([
       Utilities.generateOtp(),
       this.isMobileNumberExists(mobileNumber),
     ]);
-    // await TwilioService.sendMessage({
-    //   otp: otp,
-    //   to: '',
-    // });
-    // if (isUserExists) {
-    //   await this.updateUser({ mobileNumber }, { otp });
-    // } else {
-    //   await this.userRepository.create<User>({
-    //     mobileNumber,
-    //     otp,
-    //     expirationDate,
-    //   });
-    // }
+    await TwilioService.sendMessage({
+      otp: otp,
+      to: '',
+    });
     const userOperation = isUserExists
       ? this.updateUser({ mobileNumber }, { otp, expirationDate })
       : this.userRepository.create<User>({ mobileNumber, otp, expirationDate });
