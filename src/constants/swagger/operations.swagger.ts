@@ -15,5 +15,10 @@ export const SWAGGER_OPERATION = {
       description:
         'Determine if a given Mobile Number is already registered in the system.',
     },
+    EDIT_USER_PROFILE: {
+      summary: 'Edit the profile of the User',
+      description:
+        'Add the nessecery details of the user to secure the profile of user',
+    },
   },
 };

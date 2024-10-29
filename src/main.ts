@@ -14,7 +14,6 @@ async function bootstrap() {
   initMiddlewares(app);
   initSwaggerDocs(app);
   /** set host and port of server to run it. */
-  const host: string = config.get('SERVICE_HOST');
   const port: number | string = config.get('SERVICE_PORT');
   await app.listen(port);
   console.log(`Server is running on http://localhost:${port}`);

@@ -6,6 +6,7 @@ import TwilioService from '../../helpers/twilio.service';
 import * as UserDto from './user.dto';
 import { USER_REPOSITORY, MESSAGES, TIME } from 'src/constants';
 import { TokensService } from '../tokens/token.service';
+import { WhereOptions } from 'sequelize';
 
 @Injectable()
 export default class UsersService {
@@ -15,18 +16,31 @@ export default class UsersService {
   ) {}
   async userMobileNumber(data: UserDto.IUserMobileNumberDto): Promise<object> {
     const { mobileNumber } = data;
+    if (
+      mobileNumber.length !== 10 ||
+      !['6', '7', '8', '9'].includes(mobileNumber[0])
+    )
+      throwError(MESSAGES.ERROR.INVALID_MOBILE_NO);
     const expirationDate = new Date(Date.now() + TIME.OTP.OTP_EXPIRES);
     const [otp, isUserExists] = await Promise.all([
       Utilities.generateOtp(),
       this.isMobileNumberExists(mobileNumber),
     ]);
-    await TwilioService.sendMessage({
-      otp: otp,
-      to: '',
-    });
+    // await TwilioService.sendMessage({
+    //   otp: otp,
+    //   to: '',
+    // });
     const userOperation = isUserExists
-      ? this.updateUser({ mobileNumber }, { otp, expirationDate })
-      : this.userRepository.create<User>({ mobileNumber, otp, expirationDate });
+      ? this.updateUser(
+          { mobileNumber },
+          { otp, expirationDate, isOtpUsed: false },
+        )
+      : this.userRepository.create<User>({
+          mobileNumber,
+          otp,
+          expirationDate,
+          role: 'CUSTOMER',
+        });
 
     await userOperation;
     return { mobileNumber };
@@ -34,11 +48,12 @@ export default class UsersService {
 
   async registerLogin(
     data: UserDto.IUserLoginRegistrationDto,
-  ): Promise<{ message: string }> {
+  ): Promise<object> {
     const { mobileNumber, otp } = data;
+    const user = await this.getUser({ mobileNumber });
     await this.otpError(mobileNumber, otp);
     const tokens = await this.getJwtTokens(
-      { mobileNumber: mobileNumber },
+      { mobileNumber: mobileNumber, userId: user.id },
       true,
       TIME.JWT.THIRTY_DAYS,
     );
@@ -47,7 +62,41 @@ export default class UsersService {
       { isOtpUsed: true, refreshToken: tokens.refreshToken },
     );
 
-    return { message: MESSAGES.API_INFO.REGISTRATION_LOGIN_SUCCESSFUL };
+    return tokens;
+  }
+
+  async editProfile(data: UserDto.IEditUserProfile, id: string): Promise<void> {
+    await this.updateUser({ id }, { ...data });
+  }
+
+  async getUsers(
+    params: UserDto.GetParamsRequestDto,
+    query: UserDto.IFilterTOGetUser,
+  ): Promise<{ list: Array<User>; totalCount: number }> {
+    const { page = 1, limit = 10 } = params;
+    const { id, mobileNumber } = query;
+    const where: WhereOptions<User> = {};
+    if (id) where.id = id;
+    if (mobileNumber) where.mobileNumber = mobileNumber;
+
+    const { rows: users, count } = await this.userRepository.findAndCountAll({
+      where,
+      limit: limit,
+      offset: (page - 1) * limit,
+      attributes: {
+        exclude: [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'otp',
+          'isOtpUsed',
+          'refreshToken',
+          'expirationDate',
+          'role',
+        ],
+      },
+    });
+    return { list: users, totalCount: count };
   }
 
   async otpError(mobileNumber: string, otp: string) {

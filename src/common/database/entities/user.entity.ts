@@ -11,6 +11,25 @@ export class User extends Model<User> {
 
   @Column({
     type: DataType.STRING,
+    allowNull: true,
+  })
+  firstName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  lastName: string;
+
+  @Column({
+    type: DataType.ENUM('CUSTOMER', 'ADMIN'),
+    defaultValue: 'CUSTOMER',
+    allowNull: true,
+  })
+  role: string;
+
+  @Column({
+    type: DataType.STRING,
     allowNull: false,
   })
   mobileNumber: string;
@@ -19,8 +38,49 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: true,
   })
+  email: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
   otp: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  addressLine1: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  addressLine2: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  pinCode: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  city: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  state: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  country: string;
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
@@ -33,18 +93,6 @@ export class User extends Model<User> {
     allowNull: true,
   })
   expirationDate: Date;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  fullName: string;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  address: string;
 
   @Column({
     type: DataType.TEXT,

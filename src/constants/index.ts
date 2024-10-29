@@ -37,6 +37,7 @@ export const MESSAGES = {
     LOGGED_IN: 'You have been logged in successfully.',
     LOGGED_OUT: 'You have been logged out successfully.',
     MOBILE_NUMBER_EXISTS: 'Mobile Number Already Exists.',
+    PROFILE_UPDATED: 'Profile Updated Successfully',
   },
   ERROR: {
     EXPIRES_TOKEN: 'Token has been expired',
@@ -47,6 +48,7 @@ export const MESSAGES = {
     ACCESS_DENIED: 'ACCESS_DENIED.',
     INVALID_OTP: 'Invalid OTP.',
     OTP_USED: 'OTP Already Used.',
+    INVALID_MOBILE_NO: 'Invalid Mobile Number Please Check Again.',
   },
   API_INFO: {
     MOBILE_NUMBER_GIVEN_SUCCESSFULLY:
