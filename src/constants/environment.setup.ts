@@ -30,4 +30,8 @@ export const ENVIROMENT_MANAGER = {
     PASSWORD: process.env.MAILTRAP_PASSWORD,
   },
   BASE_URL: process.env.BASE_URL,
+  GOOGLE_AUTH: {
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_SECRET: process.env.GOOGLE_SECRET,
+  },
 };

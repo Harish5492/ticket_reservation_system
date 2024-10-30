@@ -38,8 +38,10 @@ export const MESSAGES = {
     LOGGED_OUT: 'You have been logged out successfully.',
     MOBILE_NUMBER_EXISTS: 'Mobile Number Already Exists.',
     PROFILE_UPDATED: 'Profile Updated Successfully',
+    GOOGLE_USER_SUCCESS: 'User has been fetched from the google successfully',
   },
   ERROR: {
+    GOOGLE_USER_FAILED: 'No User found from the google. Kindly try again ',
     EXPIRES_TOKEN: 'Token has been expired',
     OTP_EXPIRES: 'OTP expires please try again.',
     USER_NOT_EXIST: 'This user not exist.',

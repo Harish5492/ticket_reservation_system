@@ -20,7 +20,7 @@ async function bootstrap() {
 }
 async function initMiddlewares(app: INestApplication) {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  app.setGlobalPrefix('api/v1');
+  // app.setGlobalPrefix('api/v1');
   app.enableCors({ origin: '*' });
   app.use(cors());
 }
@@ -30,7 +30,7 @@ async function initSwaggerDocs(app: INestApplication) {
     .setDescription('API Documentation.')
     .setVersion('1.0')
     .addTag('Backend')
-    .addServer('http://localhost:3300') // Ensure the server URL matches the actual server port
+    .addServer('http://localhost:3000') // Ensure the server URL matches the actual server port
     .setLicense('MIT Licence', 'http://www.example.com')
     .setContact(
       'Harish Rana',

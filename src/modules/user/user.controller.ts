@@ -7,6 +7,7 @@ import {
   UseGuards,
   Query,
   Param,
+  Req,
 } from '@nestjs/common';
 import UserService from './user.service';
 import * as usersDto from './user.dto';
@@ -15,6 +16,7 @@ import { successResponse } from '../../helpers/responseHandeler';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { API_OPERATIONS, MESSAGES } from 'src/constants';
 import { AccessTokenGuard } from 'src/common/guard/accessTokenGuard';
+import { AuthGuard } from '@nestjs/passport';
 @ApiTags('USERS')
 @Controller('users')
 export class UserController {

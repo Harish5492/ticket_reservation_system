@@ -20,5 +20,9 @@ export const SWAGGER_OPERATION = {
       description:
         'Add the nessecery details of the user to secure the profile of user',
     },
+    LOGIN_USER_WITH_GOOGLE: {
+      summary: 'Login the user with the help of google',
+      description: 'Login the user with google mail',
+    },
   },
 };

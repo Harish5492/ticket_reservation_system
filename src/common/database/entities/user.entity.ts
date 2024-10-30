@@ -30,15 +30,27 @@ export class User extends Model<User> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   mobileNumber: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+  })
+  isMobileNumberVerified: boolean;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
   email: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+  })
+  isEmailVerified: boolean;
 
   @Column({
     type: DataType.STRING,
@@ -81,6 +93,7 @@ export class User extends Model<User> {
     allowNull: true,
   })
   country: string;
+
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,

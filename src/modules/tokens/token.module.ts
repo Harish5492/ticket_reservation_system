@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from '../../common/database/database.module'; // Ensure DatabaseModule is imported
 import UsersService from '../user/user.service';
 import { userProviders } from '../user/user.provider';
+import { GoogleStrategy } from './stratergies/googleOuth.strategy';
 
 @Module({
   imports: [JwtModule.register({}), DatabaseModule],
@@ -15,6 +16,7 @@ import { userProviders } from '../user/user.provider';
     TokensService,
     AccessTokenStrategy,
     RefreshTokenStrategy,
+    GoogleStrategy,
     UsersService,
     ...userProviders,
   ],
