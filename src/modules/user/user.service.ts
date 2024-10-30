@@ -69,24 +69,23 @@ export default class UsersService {
     return tokens;
   }
   async googleLogin(req: any): Promise<object | string> {
-    console.log('google login', req.user);
-
     if (!req.user) {
       return MESSAGES.ERROR.GOOGLE_USER_FAILED;
     }
-    let user = await this.getUser({ email: req.user.email });
+    let email = req.user.email;
+    let user = await this.getUser({ email: email });
     if (!user) {
       user = await this.userRepository.create({ ...req.user });
+      email = user.email;
     }
     const tokens = await this.getJwtTokens(
-      { email: req.user.email, userId: user.id },
+      { email: email, userId: user.id },
       true,
       TIME.JWT.THIRTY_DAYS,
     );
     await this.updateUser(
-      { email: req.user.email },
+      { email: email },
       {
-        isOtpUsed: true,
         refreshToken: tokens.refreshToken,
         isEmailVerified: true,
       },
