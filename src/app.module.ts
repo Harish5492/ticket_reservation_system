@@ -4,6 +4,7 @@ import { UsersModule } from './modules/user/user.module';
 import { DatabaseModule } from './common/database/database.module';
 import { TokensModule } from './helpers/tokens/token.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { MovieMangementModule } from './modules/movie-management/movie-management.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     UsersModule,
     DatabaseModule,
     TokensModule,
+    MovieMangementModule,
   ],
 })
 export class AppModule {}

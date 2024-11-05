@@ -7,6 +7,7 @@ export const DEVELOPMENT = 'dev';
 export const STAGE = 'stage';
 export const PRODUCTION = 'prod';
 export const USER_REPOSITORY = 'USER_REPOSITORY';
+export const MOVIE_REPOSITORY = 'MOVIE_REPOSITORY';
 export const API_OPERATIONS = SWAGGER_OPERATION;
 
 export const TIME = {
@@ -39,6 +40,14 @@ export const MESSAGES = {
     MOBILE_NUMBER_EXISTS: 'Mobile Number Already Exists.',
     PROFILE_UPDATED: 'Profile Updated Successfully',
     GOOGLE_USER_SUCCESS: 'User has been fetched from the google successfully',
+  },
+  MOVIE: {
+    ADD_MOVIE: 'Movie has been added successfully',
+    MOVIE_ALREADY_ADDED: 'Movie is already added',
+    ALL_MOVIES: 'You got all Movies successfully',
+    DATA_FETCHED: 'Data has been fetched successfully',
+    UPDATED_MOVIE: 'Movie has been updated successfully',
+    DELETED_MOVIE: 'Movie has been deleted successfully',
   },
   ERROR: {
     GOOGLE_USER_FAILED: 'No User found from the google. Kindly try again ',

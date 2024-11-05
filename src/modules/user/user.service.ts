@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '../../common/database/entities';
+import User from '../../common/database/entities/user.entity';
 import { throwError } from '../../helpers/responseHandeler';
 import * as Utilities from '../../helpers/utilies.service';
 import TwilioService from '../../helpers/twilio.service';

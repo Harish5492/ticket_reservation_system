@@ -11,49 +11,77 @@ export class Movies extends Model<Movies> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   title: string;
 
   @Column({
+    type: DataType.ENUM(
+      'Hindi',
+      'English',
+      'Telugu',
+      'Tamil',
+      'Kannada',
+      'Malayalam',
+      'Marathi',
+      'Bengali',
+      'Punjabi',
+      'Sanskrit',
+      'Gujrati',
+      'Manipuri',
+      'Odia',
+    ),
+    allowNull: true,
+  })
+  language: string;
+
+  @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   description: string;
 
   @Column({
     type: DataType.ENUM(
-      'COMEDY',
-      'HORROR',
-      'ACTION',
-      'DRAMA',
-      'THRILLER',
-      'FASTASY',
-      'SCIENCE FICTION',
-      'ADVENTURE',
-      'ANIMATION',
-      'DOCUMENTARY',
-      'CRIME',
+      'comedy',
+      'Horror',
+      'Action',
+      'Drama',
+      'Thriller',
+      'Fastasy',
+      'Science Fiction',
+      'Adventure',
+      'Animation',
+      'Documentary',
+      'Crime',
     ),
-    allowNull: false,
+    allowNull: true,
   })
   genre: string;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataType.FLOAT,
+    allowNull: true,
   })
-  duration: string;
+  duration: number;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataType.DATE,
+    allowNull: true,
   })
   releaseDate: string;
 
   @Column({
+    type: DataType.ENUM('2D', '3D', 'IMAX2D'),
+    allowNull: true,
+  })
+  format: string;
+
+  @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   posterUrl: string;
 }
+
+export default Movies;
