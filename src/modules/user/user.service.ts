@@ -5,7 +5,7 @@ import * as Utilities from '../../helpers/utilies.service';
 import TwilioService from '../../helpers/twilio.service';
 import * as UserDto from './user.dto';
 import { USER_REPOSITORY, MESSAGES, TIME } from 'src/constants';
-import { TokensService } from '../tokens/token.service';
+import { TokensService } from '../../helpers/tokens/token.service';
 import { WhereOptions } from 'sequelize';
 
 @Injectable()

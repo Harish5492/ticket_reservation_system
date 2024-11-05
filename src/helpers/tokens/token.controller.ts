@@ -2,7 +2,7 @@ import { Controller, Get, HttpException, Req, UseGuards } from '@nestjs/common';
 import { TokensService } from './token.service';
 import { RefreshTokenGuard } from '../../common/guard/refreshTokenGuard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { successResponse } from '../../helpers/responseHandeler';
+import { successResponse } from '../responseHandeler';
 import { MESSAGES } from 'src/constants';
 
 @ApiTags('TOKENS')

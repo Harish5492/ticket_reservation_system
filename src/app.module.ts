@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './modules/user/user.module';
 import { DatabaseModule } from './common/database/database.module';
-import { TokensModule } from './modules/tokens/token.module';
+import { TokensModule } from './helpers/tokens/token.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({

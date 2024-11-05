@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import * as utilities from '../../helpers/utilies.service';
-import UsersService from '../user/user.service';
+import * as utilities from '../utilies.service';
+import UsersService from '../../modules/user/user.service';
 import { MESSAGES, TIME } from '../../constants';
 
 @Injectable()

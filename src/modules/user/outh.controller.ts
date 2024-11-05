@@ -4,7 +4,8 @@ import UserService from './user.service';
 import { successResponse } from '../../helpers/responseHandeler';
 import { AuthGuard } from '@nestjs/passport';
 import { API_OPERATIONS, MESSAGES } from 'src/constants';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+@ApiTags('GOOGLE-LOGIN')
 @Controller()
 export class OuthController {
   constructor(private readonly userService: UserService) {}

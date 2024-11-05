@@ -4,7 +4,7 @@ import { UserController } from './user.controller';
 import { DatabaseModule } from '../../common/database/database.module';
 import { userProviders } from './user.provider';
 import { JwtService } from '@nestjs/jwt';
-import { TokensService } from '../tokens/token.service';
+import { TokensService } from '../../helpers/tokens/token.service';
 import { OuthController } from './outh.controller';
 
 @Module({
