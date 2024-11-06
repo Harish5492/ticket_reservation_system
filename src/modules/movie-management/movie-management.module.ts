@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/common/database/database.module';
-import { movieManagementController } from './movie-management.controller';
+import { MovieManagementController } from './movie-management.controller';
 import { movieMangementProvier } from './movie-management.provider';
-import { movieMangementService } from './movie-management.service';
+import { MovieMangementService } from './movie-management.service';
 import { JwtService } from '@nestjs/jwt';
+import { RatingService } from './rating.service';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [movieManagementController],
-  providers: [...movieMangementProvier, movieMangementService, JwtService],
+  controllers: [MovieManagementController],
+  providers: [
+    ...movieMangementProvier,
+    MovieMangementService,
+    JwtService,
+    RatingService,
+  ],
 })
 export class MovieMangementModule {}

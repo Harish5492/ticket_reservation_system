@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import Rating from './rating.entity';
 
 @Table
 export class User extends Model<User> {
@@ -112,6 +113,9 @@ export class User extends Model<User> {
     allowNull: true,
   })
   refreshToken: string;
+
+  @HasMany(() => Rating)
+  rating: Rating;
 }
 
 export default User;

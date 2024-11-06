@@ -5,6 +5,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { TokensModule } from './helpers/tokens/token.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MovieMangementModule } from './modules/movie-management/movie-management.module';
+import { HelpersModule } from './helpers/helper.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { MovieMangementModule } from './modules/movie-management/movie-managemen
     DatabaseModule,
     TokensModule,
     MovieMangementModule,
+    // HelpersModule,
   ],
 })
 export class AppModule {}

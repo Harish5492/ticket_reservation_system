@@ -44,5 +44,30 @@ export const SWAGGER_OPERATION = {
       summary: 'Update the particular Movie',
       description: 'Update the things in a particular movie',
     },
+    DELETE_MOVIE: {
+      summary: 'Delete the particular Movie',
+      description: 'Delete the t particular movie',
+    },
+    SEARCHED_MOVIE: {
+      summary: 'Search the particular Movie',
+      description: 'Search the particular movie',
+    },
+    NEW_MOVIES: {
+      summary: 'New Movies Added',
+      description: 'New Movies Added enjoy the shows',
+    },
+    ADD_RATING: {
+      summary: 'Add the rating for the specific movie',
+      description:
+        'Rating of the movie by a specific movie depends upon his experience',
+    },
+    UPDATE_RATING: {
+      summary: 'Update the rating',
+      description: 'user can update the rating ',
+    },
+    DELETE_RATING: {
+      summary: 'Delete the rating',
+      description: 'Delete the rating for the movie ',
+    },
   },
 };

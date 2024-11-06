@@ -8,6 +8,7 @@ export const STAGE = 'stage';
 export const PRODUCTION = 'prod';
 export const USER_REPOSITORY = 'USER_REPOSITORY';
 export const MOVIE_REPOSITORY = 'MOVIE_REPOSITORY';
+export const RATING_REPOSITORY = 'RATING_REPOSITORY';
 export const API_OPERATIONS = SWAGGER_OPERATION;
 
 export const TIME = {
@@ -23,6 +24,10 @@ export const TIME = {
   OTP: {
     OTP_EXPIRES: 30 * 1000,
   },
+};
+
+export const REDIS_TABLES = {
+  TOP_10_MOVIES: 'TOP_10_MOVIES',
 };
 
 export const MESSAGES = {
@@ -48,6 +53,12 @@ export const MESSAGES = {
     DATA_FETCHED: 'Data has been fetched successfully',
     UPDATED_MOVIE: 'Movie has been updated successfully',
     DELETED_MOVIE: 'Movie has been deleted successfully',
+    TOP_10_FAILED: 'Failed to get Top10 movies',
+    RATING_ADDED: 'Rating has been added successfully',
+    RATING_UPDATED: 'Rating has been updated successfully',
+    RATING_DELETED: 'Rating has been deleted successfully',
+    RATING_ALREADY_GIVEN: 'Rating is already given, kindly update rating',
+    RATING_NOT_GIVEN: 'Rating is not given',
   },
   ERROR: {
     GOOGLE_USER_FAILED: 'No User found from the google. Kindly try again ',

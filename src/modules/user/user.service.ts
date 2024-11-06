@@ -113,7 +113,6 @@ export default class UsersService {
       offset: (page - 1) * limit,
       attributes: {
         exclude: [
-          'id',
           'createdAt',
           'updatedAt',
           'otp',
@@ -146,7 +145,7 @@ export default class UsersService {
       : { message: MESSAGES.API_INFO.MOBILE_NUMBER_AVAILABLE };
   }
 
-  async isMobileNumberExists(mobileNumber: string) {
+  async isMobileNumberExists(mobileNumber: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { mobileNumber },
     });

@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import Rating from './rating.entity';
 
 @Table
 export class Movies extends Model<Movies> {
@@ -78,10 +79,19 @@ export class Movies extends Model<Movies> {
   format: string;
 
   @Column({
+    type: DataType.FLOAT,
+    allowNull: true,
+  })
+  averageRating: number;
+
+  @Column({
     type: DataType.STRING,
     allowNull: true,
   })
   posterUrl: string;
+
+  @HasMany(() => Rating)
+  rating: Rating;
 }
 
 export default Movies;

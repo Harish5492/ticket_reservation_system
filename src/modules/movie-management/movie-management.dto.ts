@@ -171,3 +171,36 @@ export class searchMovieDto {
   })
   format: string;
 }
+
+export class movieRatingDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    name: 'movie_id',
+    description: 'enter the id of the movie to get the particular movie',
+    required: true,
+    example: 'd5c3100c9-09c8-4cb8-8b0f-974b7b780dae',
+  })
+  movie_id: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({
+    name: 'rating',
+    description:
+      'add the rating of the movie as per 1 to 5, 1 is lowest in rating and 5 is highest',
+    required: true,
+    example: '4',
+  })
+  rating: number;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    name: 'comments',
+    description: 'please add your comments for the movie ',
+    required: false,
+    example: 'this is very good movies',
+  })
+  comments: string;
+}

@@ -4,6 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cors from 'cors';
 import { ConfigService } from '@nestjs/config';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -12,6 +13,8 @@ async function bootstrap() {
   /** initialize confgi service to get excess all the env's local */
   const config = app.get<ConfigService>(ConfigService);
   initMiddlewares(app);
+  /** Setting a Redis Hybrid Connection */
+  initRedisConnection(app, config);
   initSwaggerDocs(app);
   /** set host and port of server to run it. */
   const port: number | string = config.get('SERVICE_PORT');
@@ -23,6 +26,28 @@ async function initMiddlewares(app: INestApplication) {
   // app.setGlobalPrefix('api/v1');
   app.enableCors({ origin: '*' });
   app.use(cors());
+}
+
+/**
+ * @function initRedisConnection
+ * @param app (INestApplication)
+ * @param config (ConfigService)
+ */
+async function initRedisConnection(
+  app: INestApplication,
+  config: ConfigService,
+) {
+  app.connectMicroservice<MicroserviceOptions>(
+    {
+      transport: Transport.REDIS,
+      options: {
+        host: config.get('REDIS_HOST'),
+        port: config.get('REDIS_PORT'),
+        db: config.get('REDIS_DB'),
+      },
+    },
+    { inheritAppConfig: true },
+  );
 }
 async function initSwaggerDocs(app: INestApplication) {
   const config = new DocumentBuilder()

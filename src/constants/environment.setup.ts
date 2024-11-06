@@ -34,4 +34,9 @@ export const ENVIROMENT_MANAGER = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
   },
+  REDIS: {
+    HOST: process.env.REDIS_HOST,
+    PORT: process.env.REDIS_PORT,
+    DB: process.env.REDIS_DB || 0,
+  },
 };

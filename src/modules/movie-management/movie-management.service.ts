@@ -3,11 +3,10 @@ import * as movieMangementDto from './movie-management.dto';
 import { Movies } from 'src/common/database/entities/movies.entity';
 import { MESSAGES, MOVIE_REPOSITORY } from 'src/constants';
 import { throwError } from 'src/helpers/responseHandeler';
-import { Exclude } from 'class-transformer';
 import { GetParamsRequestDto } from '../user/user.dto';
 import { WhereOptions } from 'sequelize';
 
-export class movieMangementService {
+export class MovieMangementService {
   constructor(
     @Inject(MOVIE_REPOSITORY) private readonly movieRepository: typeof Movies,
   ) {}
@@ -22,7 +21,7 @@ export class movieMangementService {
     const { page, limit } = params;
     return await this.movieRepository.findAll({
       attributes: {
-        exclude: ['id', 'createdAt', 'updatedAt', 'posterUrl'],
+        exclude: ['createdAt', 'updatedAt', 'posterUrl'],
       },
       limit: limit,
       offset: (page - 1) * limit,
@@ -68,17 +67,36 @@ export class movieMangementService {
       limit: limit,
       offset: (page - 1) * limit,
       attributes: {
-        exclude: ['id', 'createdAt', 'updatedAt', 'posterUrl'],
+        exclude: ['createdAt', 'updatedAt', 'posterUrl'],
       },
     });
     return { list: movies, totalCount: count };
+  }
+
+  async newMovies(params: GetParamsRequestDto) {
+    const { page, limit } = params;
+    return await this.movieRepository.findAll({
+      order: [['createdAt', 'DESC']],
+      limit: limit,
+      offset: (page - 1) * limit,
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'posterUrl'],
+      },
+    });
+  }
+
+  async getTop10movies() {
+    return await this.movieRepository.findAll({
+      order: [['averageRating', 'DESC']],
+      limit: 10,
+    });
   }
 
   async getDatafromMovieTable(match: object) {
     return await this.movieRepository.findOne({
       where: { ...match },
       attributes: {
-        exclude: ['id', 'createdAt', 'updatedAt', 'posterUrl'],
+        exclude: ['createdAt', 'updatedAt', 'posterUrl'],
       },
     });
   }
