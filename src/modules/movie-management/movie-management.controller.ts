@@ -158,13 +158,26 @@ export class MovieManagementController {
   //   @UseGuards(AccessTokenGuard)
   @Delete('update-rating')
   async deleteRating(
-    @Body() movieId: string,
+    @Body() movieId: movieMangementDto.deleteRatingDto,
     @User() user: Record<string, any>,
   ): Promise<any> {
     try {
       const userId = user.userId;
       await this.ratingService.deleteRating(movieId, userId);
       return successResponse(MESSAGES.MOVIE.RATING_DELETED);
+    } catch (error) {
+      throw new HttpException(error.message, error);
+    }
+  }
+
+  @Get('get-average-rating/:id')
+  async getAverageRating(
+    movieId: movieMangementDto.deleteRatingDto,
+  ): Promise<any> {
+    try {
+      const result =
+        await this.ratingService.updateAvergeRatingOfTheMovie(movieId);
+      return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
     } catch (error) {
       throw new HttpException(error.message, error);
     }

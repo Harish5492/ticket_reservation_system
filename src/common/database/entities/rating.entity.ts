@@ -1,5 +1,5 @@
 import {
-    BelongsTo,
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -39,8 +39,8 @@ export class Rating extends Model<Rating> {
   movie: Movies;
 
   @Column({
-    type: DataType.ENUM('1', '2', '3', '4', '5'),
-    allowNull: true,
+    type: DataType.INTEGER,
+    validate: { min: 1, max: 5 },
   })
   rating: number;
 

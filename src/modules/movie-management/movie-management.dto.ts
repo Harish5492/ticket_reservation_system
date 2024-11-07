@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import {
   IsDateString,
   IsNotEmpty,
@@ -204,3 +204,7 @@ export class movieRatingDto {
   })
   comments: string;
 }
+
+export class deleteRatingDto extends PickType(movieRatingDto, [
+  'movie_id',
+] as const) {}
