@@ -20,7 +20,7 @@ export class TokensController {
       const data = await this.tokensService.refreshTokens(userId, refreshToken);
       return successResponse(MESSAGES.USER.REFRESH_TOKEN, data);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 }

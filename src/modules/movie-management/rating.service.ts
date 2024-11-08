@@ -20,7 +20,7 @@ export class RatingService {
       movieId: movie_id,
       userId: user_id,
     });
-    await this.updateAvergeRatingOfTheMovie(movie_id as any);
+    await this.updateAvergeRatingOfTheMovie({ movie_id: movie_id });
   }
 
   async updateRating(data: movieRatingDto, user_id: string): Promise<void> {
@@ -35,6 +35,7 @@ export class RatingService {
         where: { userId: user_id, movieId: movie_id },
       },
     );
+    await this.updateAvergeRatingOfTheMovie({ movie_id: movie_id });
   }
 
   async deleteRating(movieId: deleteRatingDto, userId: string): Promise<void> {
@@ -63,7 +64,6 @@ export class RatingService {
     if (ratings.length === 0) throwError(MESSAGES.MOVIE.RATING_NOT_GIVEN);
     let averageRating = ratings.reduce((sum, rating) => sum + rating.rating, 0);
     averageRating = averageRating / ratings.length;
-
     await this.movieRepository.update(
       { averageRating: parseFloat(averageRating.toFixed(2)) },
       { where: { id: movie_id } },

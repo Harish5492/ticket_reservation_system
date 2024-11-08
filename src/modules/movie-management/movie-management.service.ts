@@ -14,7 +14,7 @@ export class MovieMangementService {
     const { title } = data;
     const movie = await this.getDatafromMovieTable({ title });
     if (movie) throwError(MESSAGES.MOVIE.MOVIE_ALREADY_ADDED);
-    await this.movieRepository.create({ ...data });
+    await this.movieRepository.create({ ...data, averageRating: 0 });
   }
 
   async getAllMovies(params: GetParamsRequestDto) {
@@ -89,15 +89,20 @@ export class MovieMangementService {
     return await this.movieRepository.findAll({
       order: [['averageRating', 'DESC']],
       limit: 10,
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'posterUrl'],
+      },
     });
   }
 
   async getDatafromMovieTable(match: object) {
-    return await this.movieRepository.findOne({
+    const movie = await this.movieRepository.findOne({
       where: { ...match },
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'posterUrl'],
       },
     });
+    if (!movie) throwError(MESSAGES.MOVIE.MOVIE_NOT_EXISTS);
+    return movie;
   }
 }

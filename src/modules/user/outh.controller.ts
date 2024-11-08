@@ -21,7 +21,7 @@ export class OuthController {
       await this.userService.googleLogin(req);
       return successResponse(MESSAGES.USER.GOOGLE_USER_SUCCESS);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 }

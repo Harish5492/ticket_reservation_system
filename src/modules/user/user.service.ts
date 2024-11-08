@@ -53,10 +53,11 @@ export default class UsersService {
     const user = await this.getUser({ mobileNumber });
     await this.otpError(mobileNumber, otp);
     const tokens = await this.getJwtTokens(
-      { mobileNumber: mobileNumber, userId: user.id },
+      { userId: user.id, mobileNumber: mobileNumber },
       true,
       TIME.JWT.THIRTY_DAYS,
     );
+
     await this.updateUser(
       { mobileNumber },
       {
@@ -68,6 +69,7 @@ export default class UsersService {
 
     return tokens;
   }
+
   async googleLogin(req: any): Promise<object | string> {
     if (!req.user) {
       return MESSAGES.ERROR.GOOGLE_USER_FAILED;
@@ -79,7 +81,7 @@ export default class UsersService {
       email = user.email;
     }
     const tokens = await this.getJwtTokens(
-      { email: email, userId: user.id },
+      { userId: user.id, email: email },
       true,
       TIME.JWT.THIRTY_DAYS,
     );

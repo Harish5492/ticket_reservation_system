@@ -48,6 +48,12 @@ export class User extends Model<User> {
   email: string;
 
   @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  socia_id: string;
+
+  @Column({
     type: DataType.BOOLEAN,
     allowNull: true,
   })

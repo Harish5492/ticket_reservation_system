@@ -26,7 +26,7 @@ import { HelpersModule } from './helpers/helper.module';
     DatabaseModule,
     TokensModule,
     MovieMangementModule,
-    // HelpersModule,
+    HelpersModule,
   ],
 })
 export class AppModule {}

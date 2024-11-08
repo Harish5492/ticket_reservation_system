@@ -28,9 +28,9 @@ export class MovieManagementController {
     private readonly ratingService: RatingService,
   ) {}
 
-  /* This API only for admin */
-  //   @ApiBearerAuth()
-  //   @UseGuards(AccessTokenGuard)
+  // /* This API only for admin */
+  @ApiBearerAuth()
+  @UseGuards(AccessTokenGuard)
   @ApiOperation(API_OPERATIONS.MOVIES.ADD_MOVIE)
   @Post('add-movie')
   async addMovie(@Body() body: movieMangementDto.addMovieDto): Promise<any> {
@@ -38,7 +38,7 @@ export class MovieManagementController {
       await this.movieMangementService.addMovie(body);
       return successResponse(MESSAGES.MOVIE.ADD_MOVIE);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
   @ApiOperation(API_OPERATIONS.MOVIES.ALL_MOVIES)
@@ -48,7 +48,7 @@ export class MovieManagementController {
       const result = await this.movieMangementService.getAllMovies(params);
       return successResponse(MESSAGES.MOVIE.ALL_MOVIES, result);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
@@ -60,13 +60,13 @@ export class MovieManagementController {
         await this.movieMangementService.getDatafromMovieTable(param);
       return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
   /* This API is only for Admin */
-  //   @ApiBearerAuth()
-  //   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth()
+  @UseGuards(AccessTokenGuard)
   @ApiOperation(API_OPERATIONS.MOVIES.UPDATE_MOVIE)
   @Put('update-movie/:id')
   async updateMovie(
@@ -77,13 +77,13 @@ export class MovieManagementController {
       await this.movieMangementService.updateMovie(param, data);
       return successResponse(MESSAGES.MOVIE.UPDATED_MOVIE);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
   /* This API is only for Admin */
-  //   @ApiBearerAuth()
-  //   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth()
+  @UseGuards(AccessTokenGuard)
   @ApiOperation(API_OPERATIONS.MOVIES.DELETE_MOVIE)
   @Delete('delete-movie/:id')
   async deleteMovie(
@@ -93,7 +93,7 @@ export class MovieManagementController {
       await this.movieMangementService.deleteMovie(param);
       return successResponse(MESSAGES.MOVIE.DELETED_MOVIE);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
   @ApiOperation(API_OPERATIONS.MOVIES.SEARCHED_MOVIE)
@@ -106,7 +106,7 @@ export class MovieManagementController {
       const result = await this.movieMangementService.searchMovie(query, param);
       return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
@@ -117,12 +117,12 @@ export class MovieManagementController {
       const result = await this.movieMangementService.newMovies(params);
       return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
     } catch (error) {
-      throw new HttpException(error.message, error);
+      throw new HttpException(error.message, error.status);
     }
   }
 
-  //   @ApiBearerAuth()
-  //   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth()
+  @UseGuards(AccessTokenGuard)
   @ApiOperation(API_OPERATIONS.MOVIES.ADD_RATING)
   @Post('add-rating')
   async addRating(
@@ -134,12 +134,12 @@ export class MovieManagementController {
       await this.ratingService.addRating(body, userId);
       return successResponse(MESSAGES.MOVIE.RATING_ADDED);
     } catch (error) {
-      throw new HttpException(error.message, error);
+      throw new HttpException(error.message, error.status);
     }
   }
 
-  //   @ApiBearerAuth()
-  //   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth()
+  @UseGuards(AccessTokenGuard)
   @Put('update-rating')
   async updateRating(
     @Body() body: movieMangementDto.movieRatingDto,
@@ -150,12 +150,12 @@ export class MovieManagementController {
       await this.ratingService.updateRating(body, userId);
       return successResponse(MESSAGES.MOVIE.RATING_UPDATED);
     } catch (error) {
-      throw new HttpException(error.message, error);
+      throw new HttpException(error.message, error.status);
     }
   }
 
-  //   @ApiBearerAuth()
-  //   @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth()
+  @UseGuards(AccessTokenGuard)
   @Delete('update-rating')
   async deleteRating(
     @Body() movieId: movieMangementDto.deleteRatingDto,
@@ -166,7 +166,7 @@ export class MovieManagementController {
       await this.ratingService.deleteRating(movieId, userId);
       return successResponse(MESSAGES.MOVIE.RATING_DELETED);
     } catch (error) {
-      throw new HttpException(error.message, error);
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -179,7 +179,7 @@ export class MovieManagementController {
         await this.ratingService.updateAvergeRatingOfTheMovie(movieId);
       return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
     } catch (error) {
-      throw new HttpException(error.message, error);
+      throw new HttpException(error.message, error.status);
     }
   }
 }

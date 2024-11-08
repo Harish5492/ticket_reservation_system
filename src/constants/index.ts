@@ -59,6 +59,7 @@ export const MESSAGES = {
     RATING_DELETED: 'Rating has been deleted successfully',
     RATING_ALREADY_GIVEN: 'Rating is already given, kindly update rating',
     RATING_NOT_GIVEN: 'Rating is not given',
+    MOVIE_NOT_EXISTS: 'Movie is not exists',
   },
   ERROR: {
     GOOGLE_USER_FAILED: 'No User found from the google. Kindly try again ',

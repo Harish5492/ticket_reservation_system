@@ -15,7 +15,7 @@ async function bootstrap() {
   initMiddlewares(app);
   /** Setting a Redis Hybrid Connection */
   initRedisConnection(app, config);
-  initSwaggerDocs(app);
+  initSwaggerDocs(app); 
   /** set host and port of server to run it. */
   const port: number | string = config.get('SERVICE_PORT');
   await app.listen(port);

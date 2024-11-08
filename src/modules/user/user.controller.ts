@@ -24,6 +24,7 @@ export class UserController {
   async healthCheck() {
     return 'Server is Working';
   }
+
   @ApiOperation(API_OPERATIONS.USER.ENTER_MOBILE_NUMBER)
   @Post('user-mobileNumber')
   async userMobileNumber(
@@ -36,7 +37,7 @@ export class UserController {
         result,
       );
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
@@ -49,7 +50,7 @@ export class UserController {
       const result = await this.userService.registerLogin(body);
       return successResponse(MESSAGES.USER.SIGN_UP_SUCCESS, result);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
@@ -60,7 +61,7 @@ export class UserController {
       const result = await this.userService.mobileExists(body);
       return successResponse(MESSAGES.USER.MOBILE_NUMBER_EXISTS, result);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
@@ -77,7 +78,7 @@ export class UserController {
       await this.userService.editProfile(body, userId);
       return successResponse(MESSAGES.USER.PROFILE_UPDATED);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 
@@ -94,7 +95,7 @@ export class UserController {
       const result = await this.userService.getUsers(params, query);
       return successResponse(MESSAGES.USER.PROFILE_UPDATED, result);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status.status);
     }
   }
 }
