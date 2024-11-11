@@ -9,6 +9,8 @@ export const PRODUCTION = 'prod';
 export const USER_REPOSITORY = 'USER_REPOSITORY';
 export const MOVIE_REPOSITORY = 'MOVIE_REPOSITORY';
 export const RATING_REPOSITORY = 'RATING_REPOSITORY';
+export const THEATER_REPOSITORY = 'THEATER_REPOSITORY';
+export const SHOWTIME_REPOSITORY = 'SHOWTIME_REPOSITORY';
 export const API_OPERATIONS = SWAGGER_OPERATION;
 
 export const TIME = {
@@ -60,6 +62,12 @@ export const MESSAGES = {
     RATING_ALREADY_GIVEN: 'Rating is already given, kindly update rating',
     RATING_NOT_GIVEN: 'Rating is not given',
     MOVIE_NOT_EXISTS: 'Movie is not exists',
+  },
+  THEATER: {
+    ADD_THEATER: 'Theater has been added successfully',
+    DELETE_THEATER: 'Theater has been deleted successfully',
+    THEATER_ALREADY_ADDED: 'Theater already exists',
+    THEATER_NOT_EXISTS: 'Theater not exists',
   },
   ERROR: {
     GOOGLE_USER_FAILED: 'No User found from the google. Kindly try again ',
