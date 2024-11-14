@@ -69,5 +69,46 @@ export const SWAGGER_OPERATION = {
       summary: 'Delete the rating',
       description: 'Delete the rating for the movie ',
     },
+    AVERAGE_RATING: {
+      summary: 'Average Rating of the movie',
+      description: 'Get the Average Rating of the movie',
+    },
+    TOP_10_MOVIES: {
+      summary: 'Get top 10 moves',
+      description: 'Get the top 10 movies',
+    },
+  },
+  THEATER: {
+    ADD_THEATER: {
+      summary: 'Add the theater',
+      description:
+        'Add the theater of the movie so that people can enjoy the movie',
+    },
+    DELETE_THEATER: {
+      summary: 'Delete the theater',
+      description: 'Delete the theater',
+    },
+  },
+  SHOWTIME: {
+    ADD_SHOWTIME: {
+      summary: 'Add the showtime',
+      description: 'Add the showtime as people enjoy the movie',
+    },
+    DELETE_SHOWTIME: {
+      summary: 'Delete the showtime',
+      description: 'Delete the showtime as show is not availabe or closed',
+    },
+    UPDATE_SHOWTIME: {
+      summary: 'Update the showtime',
+      description: 'Update the showtime as if any issue arries',
+    },
+    GET_ALL_THEATERS: {
+      summary: 'All theatres as per locations',
+      descriptioin: 'Get All Theaters as per the locations of the user',
+    },
+    GET_A_THEATER: {
+      summary: 'Get a particular theater ',
+      description: 'Get a  particular theater as per the id of the theater',
+    },
   },
 };

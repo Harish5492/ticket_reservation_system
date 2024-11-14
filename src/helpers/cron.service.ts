@@ -10,11 +10,10 @@ export class CronService {
     private readonly redisService: RedisService,
     private readonly movieMangementService: MovieMangementService,
   ) {}
-  @Cron('*/10 * * * * *')
+  @Cron('0 */5 * * * *')
   async getTop10Movies() {
     try {
       const result = await this.movieMangementService.getTop10movies();
-      console.log('result ', result);
       await this.redisService.set(
         REDIS_TABLES.TOP_10_MOVIES,
         JSON.stringify(result),

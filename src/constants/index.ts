@@ -68,6 +68,14 @@ export const MESSAGES = {
     DELETE_THEATER: 'Theater has been deleted successfully',
     THEATER_ALREADY_ADDED: 'Theater already exists',
     THEATER_NOT_EXISTS: 'Theater not exists',
+    GET_ALL_THEATER: 'All Theater has been fetched successfully',
+    GET_A_THEATER: 'Theater has been fetched successfully',
+  },
+  SHOWTIME: {
+    ADD_SHOWTIME: 'Showtime has been added successfully',
+    DELETE_SHOWTIME: 'Showtime has been deleted successfully',
+    SHOWTIME_ALREADY_EXISTS: 'Showtime already exists',
+    GET_SHOWTIME: 'Showtime has been fetched successfully',
   },
   ERROR: {
     GOOGLE_USER_FAILED: 'No User found from the google. Kindly try again ',

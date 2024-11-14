@@ -29,8 +29,8 @@ export class MovieManagementController {
   ) {}
 
   // /* This API only for admin */
-  @ApiBearerAuth()
-  @UseGuards(AccessTokenGuard)
+  // @ApiBearerAuth()
+  // @UseGuards(AccessTokenGuard)
   @ApiOperation(API_OPERATIONS.MOVIES.ADD_MOVIE)
   @Post('add-movie')
   async addMovie(@Body() body: movieMangementDto.addMovieDto): Promise<any> {
@@ -140,6 +140,7 @@ export class MovieManagementController {
 
   @ApiBearerAuth()
   @UseGuards(AccessTokenGuard)
+  @ApiOperation(API_OPERATIONS.MOVIES.UPDATE_RATING)
   @Put('update-rating')
   async updateRating(
     @Body() body: movieMangementDto.movieRatingDto,
@@ -156,9 +157,10 @@ export class MovieManagementController {
 
   @ApiBearerAuth()
   @UseGuards(AccessTokenGuard)
-  @Delete('update-rating')
+  @ApiOperation(API_OPERATIONS.MOVIES.DELETE_RATING)
+  @Delete('delete-rating/:id')
   async deleteRating(
-    @Body() movieId: movieMangementDto.deleteRatingDto,
+    @Param() movieId: movieMangementDto.deleteRatingDto,
     @User() user: Record<string, any>,
   ): Promise<any> {
     try {
@@ -170,13 +172,26 @@ export class MovieManagementController {
     }
   }
 
+  @ApiOperation(API_OPERATIONS.MOVIES.UPDATE_RATING)
   @Get('get-average-rating/:id')
   async getAverageRating(
-    movieId: movieMangementDto.deleteRatingDto,
+    @Param() movieId: movieMangementDto.deleteRatingDto,
   ): Promise<any> {
     try {
       const result =
         await this.ratingService.updateAvergeRatingOfTheMovie(movieId);
+      return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @ApiOperation(API_OPERATIONS.MOVIES.TOP_10_MOVIES)
+  @Get('get-top10-movies')
+  async top10Movies(): Promise<any> {
+    try {
+      const result =
+        await this.movieMangementService.getTop10moviesfromReddis();
       return successResponse(MESSAGES.MOVIE.DATA_FETCHED, result);
     } catch (error) {
       throw new HttpException(error.message, error.status);

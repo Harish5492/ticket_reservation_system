@@ -6,6 +6,8 @@ import { TokensModule } from './helpers/tokens/token.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { MovieMangementModule } from './modules/movie-management/movie-management.module';
 import { HelpersModule } from './helpers/helper.module';
+import { theaterModule as TheaterModule } from './modules/theater/theater.module';
+import { ShowTimeModule } from './modules/show-time-management/show-time.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { HelpersModule } from './helpers/helper.module';
     TokensModule,
     MovieMangementModule,
     HelpersModule,
+    TheaterModule,
+    ShowTimeModule,
   ],
 })
 export class AppModule {}

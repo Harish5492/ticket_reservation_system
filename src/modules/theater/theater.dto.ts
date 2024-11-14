@@ -1,12 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
+
+interface SeatConfiguration {
+  gold: {
+    rows: string[]; // 5 rows for gold
+  };
+  diamond: {
+    rows: string[]; // 3 rows for diamond
+  };
+  normal: {
+    rows: string[]; // 10 rows for normal
+  };
+}
 
 export class addTheaterDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
     name: 'name',
-    description: 'enter the Name of the Theater',
+    description: 'Enter the name of the theater',
     required: true,
     example: 'PVR VR Punjab',
   })
@@ -16,21 +28,27 @@ export class addTheaterDto {
   @IsString()
   @ApiProperty({
     name: 'location',
-    description: 'enter the location of the theater',
+    description: 'Enter the location of the theater',
     required: true,
     example: 'Punjab',
   })
   location: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsObject()
   @ApiProperty({
     name: 'seatConfiguration',
-    description: 'show the seats of the theater as per the price ',
+    description: 'Show the seats of the theater as per the price',
     required: true,
-    example: 'S25,S22',
+    example: {
+      gold: { rows: ['a1', 'a2', 'a3', 'a4', 'a5'] },
+      diamond: { rows: ['b1', 'b2', 'b3'] },
+      normal: {
+        rows: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10'],
+      },
+    },
   })
-  seatConfiguration: object;
+  seatConfiguration: SeatConfiguration; // Updated seat configuration with rows
 }
 
 export class deleteTheaterDto {
@@ -43,4 +61,24 @@ export class deleteTheaterDto {
     example: 'd5c3100c9-09c8-4cb8-8b0f-974b7b780dae',
   })
   id: string;
+}
+
+export class filterTheaterDto {
+  @IsOptional()
+  @ApiProperty({
+    name: 'name',
+    description: 'enter the Name of the Theater',
+    required: false,
+    example: 'PVR VR Punjab',
+  })
+  name?: string;
+
+  @IsOptional()
+  @ApiProperty({
+    name: 'location',
+    description: 'enter the location of the theater',
+    required: false,
+    example: 'Punjab',
+  })
+  location?: string;
 }

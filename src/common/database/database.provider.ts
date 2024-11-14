@@ -15,7 +15,6 @@ export const databaseProviders = [
         dialect: config.dialect,
       });
       sequelize.addModels([__dirname + '/entities/**/*.entity{.ts,.js}']);
-      console.log('Models added to Sequelize:', sequelize.models);
       if (process.env.NODE_ENV !== 'prod') {
         try {
           await sequelize.sync({

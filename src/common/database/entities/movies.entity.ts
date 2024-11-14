@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import Rating from './rating.entity';
+import ShowTime from './showTime.entity';
 
 @Table
 export class Movies extends Model<Movies> {
@@ -92,6 +93,9 @@ export class Movies extends Model<Movies> {
 
   @HasMany(() => Rating)
   rating: Rating;
+
+  @HasMany(() => ShowTime)
+  movies: ShowTime;
 }
 
 export default Movies;

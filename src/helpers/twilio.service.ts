@@ -1,5 +1,6 @@
 import * as twilio from 'twilio';
 import { EM } from '../constants';
+import { throwError } from './responseHandeler';
 
 class TwilioHelper {
   private client: any;
@@ -21,9 +22,9 @@ class TwilioHelper {
         from: '+12182280015',
         to: '+918872512811',
       });
-      console.log('Message sent. SID:', message.sid);
+      // console.log('Message sent. SID:', message.sid);
     } catch (error) {
-      console.log('Error:', error);
+      throwError(error.message);
     }
   }
 }

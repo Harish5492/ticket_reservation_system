@@ -1,4 +1,5 @@
-import { Table, Model, DataType, Column } from 'sequelize-typescript';
+import { Table, Model, DataType, Column, HasMany } from 'sequelize-typescript';
+import ShowTime from './showTime.entity';
 
 @Table
 export class Theater extends Model<Theater> {
@@ -21,11 +22,8 @@ export class Theater extends Model<Theater> {
   })
   location: string;
 
-  @Column({
-    type: DataType.JSON,
-    allowNull: true,
-  })
-  seatConfiguration: object;
+  @HasMany(() => ShowTime)
+  showTimes: ShowTime[];
 }
 
 export default Theater;

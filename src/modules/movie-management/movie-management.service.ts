@@ -1,14 +1,16 @@
 import { Inject } from '@nestjs/common';
 import * as movieMangementDto from './movie-management.dto';
 import { Movies } from 'src/common/database/entities/movies.entity';
-import { MESSAGES, MOVIE_REPOSITORY } from 'src/constants';
+import { MESSAGES, MOVIE_REPOSITORY, REDIS_TABLES } from 'src/constants';
 import { throwError } from 'src/helpers/responseHandeler';
 import { GetParamsRequestDto } from '../user/user.dto';
-import { WhereOptions } from 'sequelize';
+import { Sequelize, WhereOptions } from 'sequelize';
+import { RedisService } from 'src/helpers/redis.service';
 
 export class MovieMangementService {
   constructor(
     @Inject(MOVIE_REPOSITORY) private readonly movieRepository: typeof Movies,
+    private readonly redisService: RedisService,
   ) {}
   async addMovie(data: movieMangementDto.addMovieDto) {
     const { title } = data;
@@ -43,6 +45,8 @@ export class MovieMangementService {
 
   async deleteMovie(userId: movieMangementDto.getMovieDto) {
     const { id } = userId;
+    const movie = await this.getDatafromMovieTable({ id });
+    if (!movie) throwError(MESSAGES.MOVIE.MOVIE_NOT_EXISTS);
     return await this.movieRepository.destroy({
       where: { id },
     });
@@ -87,7 +91,9 @@ export class MovieMangementService {
 
   async getTop10movies() {
     return await this.movieRepository.findAll({
-      order: [['averageRating', 'DESC']],
+      order: [
+        [Sequelize.literal('COALESCE(averageRating, createdAt)'), 'DESC'],
+      ],
       limit: 10,
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'posterUrl'],
@@ -95,14 +101,21 @@ export class MovieMangementService {
     });
   }
 
+  async getTop10moviesfromReddis() {
+    let records: any = await this.redisService.get(
+      REDIS_TABLES.TOP_10_MOVIES,
+      5,
+    );
+    records = JSON.parse(records);
+    return { records };
+  }
+
   async getDatafromMovieTable(match: object) {
-    const movie = await this.movieRepository.findOne({
+    return await this.movieRepository.findOne({
       where: { ...match },
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'posterUrl'],
       },
     });
-    if (!movie) throwError(MESSAGES.MOVIE.MOVIE_NOT_EXISTS);
-    return movie;
   }
 }

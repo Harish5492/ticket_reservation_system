@@ -3,11 +3,13 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
-import User from './user.entity';
 import Movies from './movies.entity';
+import Theater from './theater.entity';
+import ShowTimeSeat from './showTime.seats.entity';
 
 @Table
 export class ShowTime extends Model<ShowTime> {
@@ -18,15 +20,15 @@ export class ShowTime extends Model<ShowTime> {
   })
   id: string;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => Theater)
   @Column({
     type: DataType.UUID,
     allowNull: true,
   })
-  userId: string;
+  theaterId: string;
 
-  @BelongsTo(() => User, { as: 'User' })
-  user: User;
+  @BelongsTo(() => Theater, { as: 'Theater' })
+  theater: Theater;
 
   @ForeignKey(() => Movies)
   @Column({
@@ -49,6 +51,9 @@ export class ShowTime extends Model<ShowTime> {
     allowNull: true,
   })
   endTime: string;
+
+  @HasMany(() => ShowTimeSeat)
+  showTimeSeats: ShowTimeSeat[];
 }
 
 export default ShowTime;
