@@ -8,7 +8,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import Movies from './movies.entity';
-import Theater from './theater.entity';
+import Auditorium from './auditorium.entity';
 import ShowTimeSeat from './showTime.seats.entity';
 
 @Table
@@ -20,20 +20,20 @@ export class ShowTime extends Model<ShowTime> {
   })
   id: string;
 
-  @ForeignKey(() => Theater)
+  @ForeignKey(() => Auditorium)
   @Column({
     type: DataType.UUID,
-    allowNull: true,
+    allowNull: false,
   })
-  theaterId: string;
+  auditoriumId: string;
 
-  @BelongsTo(() => Theater, { as: 'Theater' })
-  theater: Theater;
+  @BelongsTo(() => Auditorium, { as: 'Auditorium' })
+  auditorium: Auditorium;
 
   @ForeignKey(() => Movies)
   @Column({
     type: DataType.UUID,
-    allowNull: true,
+    allowNull: false,
   })
   movieId: string;
 
@@ -42,13 +42,13 @@ export class ShowTime extends Model<ShowTime> {
 
   @Column({
     type: DataType.TIME,
-    allowNull: true,
+    allowNull: false,
   })
   startTime: string;
 
   @Column({
     type: DataType.TIME,
-    allowNull: true,
+    allowNull: false,
   })
   endTime: string;
 

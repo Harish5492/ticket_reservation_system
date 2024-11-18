@@ -205,6 +205,6 @@ export class movieRatingDto {
   comments: string;
 }
 
-export class deleteRatingDto extends PickType(movieRatingDto, [
+export class idShowTimeFucntionsDto extends PickType(movieRatingDto, [
   'movie_id',
 ] as const) {}

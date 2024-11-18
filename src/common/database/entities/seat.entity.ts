@@ -1,12 +1,12 @@
 import {
-  Table,
-  Model,
-  DataType,
+  BelongsTo,
   Column,
-  BelongsToMany,
+  DataType,
+  ForeignKey,
+  Model,
+  Table,
 } from 'sequelize-typescript';
-import ShowTime from './showTime.entity';
-import ShowTimeSeat from './showTime.seats.entity';
+import { Auditorium } from './auditorium.entity';
 
 @Table
 export class Seat extends Model<Seat> {
@@ -16,6 +16,16 @@ export class Seat extends Model<Seat> {
     primaryKey: true,
   })
   id: string;
+
+  @ForeignKey(() => Auditorium)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  auditoriumId: string;
+
+  @BelongsTo(() => Auditorium)
+  auditorium: Auditorium;
 
   @Column({
     type: DataType.STRING,
@@ -35,8 +45,12 @@ export class Seat extends Model<Seat> {
   })
   type: 'gold' | 'diamond' | 'normal';
 
-  @BelongsToMany(() => ShowTime, () => ShowTimeSeat)
-  showTimes: ShowTime[];
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: true,
+    allowNull: false,
+  })
+  isActive: boolean; // Indicates whether the seat is currently active/available
 }
 
 export default Seat;

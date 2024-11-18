@@ -1,5 +1,5 @@
 import { Table, Model, DataType, Column, HasMany } from 'sequelize-typescript';
-import ShowTime from './showTime.entity';
+import Auditorium from './auditorium.entity';
 
 @Table
 export class Theater extends Model<Theater> {
@@ -12,18 +12,30 @@ export class Theater extends Model<Theater> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
   })
   name: string;
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
   })
   location: string;
 
-  @HasMany(() => ShowTime)
-  showTimes: ShowTime[];
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  contact: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  totalAuditoriums: number;
+
+  @HasMany(() => Auditorium)
+  auditoriums: Auditorium[];
 }
 
 export default Theater;

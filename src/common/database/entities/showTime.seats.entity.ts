@@ -35,7 +35,7 @@ export class ShowTimeSeat extends Model<ShowTimeSeat> {
     type: DataType.STRING,
     allowNull: true,
   })
-  reservedBy?: string; // User ID of the person who reserved the seat
+  reservedBy?: string;
 }
 
 export default ShowTimeSeat;

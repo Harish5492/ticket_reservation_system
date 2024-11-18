@@ -1,17 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
-
-interface SeatConfiguration {
-  gold: {
-    rows: string[]; // 5 rows for gold
-  };
-  diamond: {
-    rows: string[]; // 3 rows for diamond
-  };
-  normal: {
-    rows: string[]; // 10 rows for normal
-  };
-}
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class addTheaterDto {
   @IsNotEmpty()
@@ -35,20 +23,24 @@ export class addTheaterDto {
   location: string;
 
   @IsNotEmpty()
-  @IsObject()
+  @IsString()
   @ApiProperty({
-    name: 'seatConfiguration',
-    description: 'Show the seats of the theater as per the price',
+    name: 'contact',
+    description: 'enter the contact number so a customer can ask any queries',
     required: true,
-    example: {
-      gold: { rows: ['a1', 'a2', 'a3', 'a4', 'a5'] },
-      diamond: { rows: ['b1', 'b2', 'b3'] },
-      normal: {
-        rows: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10'],
-      },
-    },
+    example: 'harish@gmail.com',
   })
-  seatConfiguration: SeatConfiguration; // Updated seat configuration with rows
+  contact: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({
+    name: 'totalAuditoriums',
+    description: 'enter the totalAuditoriums  a theater has',
+    required: true,
+    example: 5,
+  })
+  totalAuditoriums: number;
 }
 
 export class deleteTheaterDto {

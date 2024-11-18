@@ -160,7 +160,7 @@ export class MovieManagementController {
   @ApiOperation(API_OPERATIONS.MOVIES.DELETE_RATING)
   @Delete('delete-rating/:id')
   async deleteRating(
-    @Param() movieId: movieMangementDto.deleteRatingDto,
+    @Param() movieId: movieMangementDto.idShowTimeFucntionsDto,
     @User() user: Record<string, any>,
   ): Promise<any> {
     try {
@@ -175,7 +175,7 @@ export class MovieManagementController {
   @ApiOperation(API_OPERATIONS.MOVIES.UPDATE_RATING)
   @Get('get-average-rating/:id')
   async getAverageRating(
-    @Param() movieId: movieMangementDto.deleteRatingDto,
+    @Param() movieId: movieMangementDto.idShowTimeFucntionsDto,
   ): Promise<any> {
     try {
       const result =

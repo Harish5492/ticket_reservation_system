@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import Rating from 'src/common/database/entities/rating.entity';
 import { MESSAGES, MOVIE_REPOSITORY, RATING_REPOSITORY } from 'src/constants';
-import { deleteRatingDto, movieRatingDto } from './movie-management.dto';
+import { idShowTimeFucntionsDto, movieRatingDto } from './movie-management.dto';
 import { throwError } from 'src/helpers/responseHandeler';
 import Movies from 'src/common/database/entities/movies.entity';
 
@@ -38,7 +38,10 @@ export class RatingService {
     await this.updateAvergeRatingOfTheMovie({ movie_id: movie_id });
   }
 
-  async deleteRating(movieId: deleteRatingDto, userId: string): Promise<void> {
+  async deleteRating(
+    movieId: idShowTimeFucntionsDto,
+    userId: string,
+  ): Promise<void> {
     const { movie_id } = movieId;
     const ratingByUser = await this.getRatingByUser(userId, movie_id);
     if (!ratingByUser) throwError(MESSAGES.MOVIE.RATING_NOT_GIVEN);
@@ -54,7 +57,7 @@ export class RatingService {
   }
 
   async updateAvergeRatingOfTheMovie(
-    movieId: deleteRatingDto,
+    movieId: idShowTimeFucntionsDto,
   ): Promise<object> {
     const { movie_id } = movieId;
     const ratings = await this.ratingRepository.findAll({

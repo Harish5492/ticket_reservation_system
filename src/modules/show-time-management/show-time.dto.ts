@@ -15,12 +15,12 @@ export class addShowtimeDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    name: 'theaterId',
+    name: 'auditoriumId',
     description: 'enter the id of the theater',
     required: true,
     example: 'd5c3100c9-09c8-4cb8-8b0f-974b7b780dae',
   })
-  theaterId: string;
+  auditoriumId: string;
 
   @IsNotEmpty()
   @IsString()
@@ -57,6 +57,6 @@ export class deleteShowtimeDto {
 }
 
 export class getShowtimeDto extends PickType(addShowtimeDto, [
-  'theaterId',
+  'auditoriumId',
   'movieId',
 ] as const) {}

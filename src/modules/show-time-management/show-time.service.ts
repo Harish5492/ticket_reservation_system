@@ -4,7 +4,6 @@ import { MESSAGES, SHOWTIME_REPOSITORY } from 'src/constants';
 import {
   addShowtimeDto,
   deleteShowtimeDto as idShowTimeFucntionsDto,
-  getShowtimeDto,
 } from './show-time.dto';
 import { throwError } from 'src/helpers/responseHandeler';
 import Theater from 'src/common/database/entities/theater.entity';
@@ -16,8 +15,8 @@ export class ShowTimeService {
     private readonly showTimeRepository: typeof ShowTime,
   ) {}
   async addShowTime(data: addShowtimeDto) {
-    const { movieId, theaterId } = data;
-    const showTime = await this.getShowTime({ movieId, theaterId });
+    const { movieId, auditoriumId } = data;
+    const showTime = await this.getShowTime({ movieId, auditoriumId });
     if (showTime) throwError(MESSAGES.SHOWTIME.SHOWTIME_ALREADY_EXISTS);
     await this.showTimeRepository.create({ ...data });
   }
@@ -40,7 +39,7 @@ export class ShowTimeService {
 
   async getShowTimeSeats(data: idShowTimeFucntionsDto): Promise<ShowTime> {
     const { id } = data;
-    const { theaterId, movieId } = await this.getShowTime({ id });
+    const { auditoriumId, movieId } = await this.getShowTime({ id });
     const movieShowTimeSeats = await this.showTimeRepository.findOne({
       where: { id },
       attributes: {
@@ -50,7 +49,7 @@ export class ShowTimeService {
         {
           model: Theater,
           as: 'Theater',
-          where: { id: theaterId },
+          where: { id: auditoriumId },
           attributes: {
             exclude: ['createdAt', 'updatedAt'],
           },
