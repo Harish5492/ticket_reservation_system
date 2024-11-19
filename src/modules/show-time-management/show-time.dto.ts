@@ -16,7 +16,7 @@ export class addShowtimeDto {
   @IsNotEmpty()
   @ApiProperty({
     name: 'auditoriumId',
-    description: 'enter the id of the theater',
+    description: 'enter the id of the auditorium',
     required: true,
     example: 'd5c3100c9-09c8-4cb8-8b0f-974b7b780dae',
   })

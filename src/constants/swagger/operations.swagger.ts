@@ -25,7 +25,6 @@ export const SWAGGER_OPERATION = {
       description: 'Login the user with google mail',
     },
   },
-
   MOVIES: {
     ADD_MOVIE: {
       summary: 'Add the new movie in the list',
@@ -87,6 +86,17 @@ export const SWAGGER_OPERATION = {
     DELETE_THEATER: {
       summary: 'Delete the theater',
       description: 'Delete the theater',
+    },
+  },
+  AUDITORIUM: {
+    ADD_AUDITORIUM: {
+      summary: 'Add the Auditorium as per the theater id',
+      description:
+        'Add the Auditorium  as per the theater so one can see seats',
+    },
+    GET_AUDITORIUM: {
+      summary: 'Get the auditorium and all its seats',
+      description: 'Get the auditorium and all its seats',
     },
   },
   SHOWTIME: {

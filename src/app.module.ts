@@ -8,6 +8,7 @@ import { MovieMangementModule } from './modules/movie-management/movie-managemen
 import { HelpersModule } from './helpers/helper.module';
 import { theaterModule as TheaterModule } from './modules/theater/theater.module';
 import { ShowTimeModule } from './modules/show-time-management/show-time.module';
+import { AuditoriumModule } from './modules/auditorium/auditorium.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ShowTimeModule } from './modules/show-time-management/show-time.module'
     HelpersModule,
     TheaterModule,
     ShowTimeModule,
+    AuditoriumModule,
   ],
 })
 export class AppModule {}

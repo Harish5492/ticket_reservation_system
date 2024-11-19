@@ -50,7 +50,7 @@ export class Seat extends Model<Seat> {
     defaultValue: true,
     allowNull: false,
   })
-  isActive: boolean; // Indicates whether the seat is currently active/available
+  isActive: boolean;
 }
 
 export default Seat;

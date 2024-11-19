@@ -12,6 +12,7 @@ export const RATING_REPOSITORY = 'RATING_REPOSITORY';
 export const THEATER_REPOSITORY = 'THEATER_REPOSITORY';
 export const SHOWTIME_REPOSITORY = 'SHOWTIME_REPOSITORY';
 export const AUDITORIUM_REPOSITORY = 'AUDITORIUM_REPOSITORY';
+export const SEAT_REPOSITORY = 'SEAT_REPOSITORY';
 export const API_OPERATIONS = SWAGGER_OPERATION;
 
 export const TIME = {
@@ -71,6 +72,13 @@ export const MESSAGES = {
     THEATER_NOT_EXISTS: 'Theater not exists',
     GET_ALL_THEATER: 'All Theater has been fetched successfully',
     GET_A_THEATER: 'Theater has been fetched successfully',
+  },
+  AUDITORIUM: {
+    ADD_AUDITORIUM: 'Auditorium has been added successfully',
+    INVALID_AUDI_DETAILS: 'Invalid Auditorium Details kindly check once again',
+    SEAT_PER_ROW_MUST_MATCH_TOTALROWS:
+      'The number of elements in seatsPerRow must match totalRows.',
+    GET_AUDITORIUM: 'Get Auditorium with all seats',
   },
   SHOWTIME: {
     ADD_SHOWTIME: 'Showtime has been added successfully',
